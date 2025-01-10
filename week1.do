@@ -15,7 +15,7 @@ clear all
 set more off
 
 *change working directory (use asterix to comment)
-global path "C:\Users\mahdi\are256b-W24"
+global path "C:\Users\mahdi\Dropbox\Courses\are256b-w25"
 cd $path
 
 *How to open a .xlsx file
@@ -40,6 +40,8 @@ browse
 *Example
 browse ASVABAR if EDUCMAST==1
 
+
+
 codebook
 codebook AGE
 
@@ -54,6 +56,7 @@ tabulate AGE, summarize(ASVABC) means
 *operators:  ==, <, >, <=, >=, !=	
 * | is "or".
 * & is "and".	
+
 
 sum ASVABC if AGE == 28
 sum ASVABC if AGE != 28
