@@ -3,7 +3,6 @@ ARE 256B Winter 2025 TA Sections
 
 ## Announcements
 - Mahdi OHs: Fridays from 10:00 to 11:00 at SSH 2143.  
-- office: SSH 2169, email: mashams[at]ucdavis[dot]edu
 
 ## Access to Stata
 - option 1
