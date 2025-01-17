@@ -18,7 +18,7 @@ cd $path
 *--------------------------------------------------
 *Program Setup
 *--------------------------------------------------
-version 14              // Set Version number for backward compatibility
+version 18          // Set Version number for backward compatibility
 set more off            // Disable partitioned output
 clear all               // Start with a clean slate
 set linesize 80         // Line size limit to make output more readable
@@ -89,25 +89,6 @@ graph export graphs/linear.png, replace
 probit EDUCBA  ASVABC, robust 
 *Compare results with Linear Probability Model
 
-*----------------------------------------------------------------------------*
-* section 3: computing marginal effects 
-*----------------------------------------------------------------------------*
-
-*Computing marginal effects
-*Look at Slides 68-69 for definitions
-*Average Margnal Effect
-margins, dydx(ASVABC)
-
-*Marginal effects evaluated at the mean 
-margins, dydx(ASVABC) atmeans
-// alternative: mfx compute, dydx
-
-*Marginal effects evaluated at a different point
-margins, dydx(ASVABC) at(ASVABC=0.1)
-margins, dydx(ASVABC) at(ASVABC=0.6)
-
-
-// what does margins alone do?
 
 *Predict Probability
 *\hat{Y}_i = \Phi{\hat{\beta}X_i}
@@ -124,6 +105,32 @@ nlcom norm(_b[ASVABC]*-2.2188 + _b[ _cons])
 predict EDUCBA_probit_hat
 browse EDUCBA EDUCBA_hat EDUCBA_probit_hat
 twoway (scatter EDUCBA_probit_hat ASVABC)
+
+
+*----------------------------------------------------------------------------*
+* section 3: computing marginal effects 
+*----------------------------------------------------------------------------*
+
+*Computing marginal effects
+*Look at Slides 68-69 for definitions
+
+*Average Margnal Effect
+margins, dydx(ASVABC)
+
+*Marginal effects evaluated at the mean 
+margins, dydx(ASVABC) atmeans
+// alternative: mfx compute, dydx
+
+* for an individual with mean cognitive score, if you increase the coginitive score 
+* by 1% the probablity of getting degree will increase by 0.2% 
+
+
+*Marginal effects evaluated at a different point
+margins, dydx(ASVABC) at(ASVABC=0.1)
+margins, dydx(ASVABC) at(ASVABC=0.6)
+
+
+// what does margins alone do?
 
 *----------------------------------------------------------------------------*
 * section 4: model comparison based on rmse 
