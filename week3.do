@@ -54,23 +54,74 @@ gen Y= Ystar*(Ystar>0)
 // replace Y = 0 if Ystar <= 0
 
 scatter Y X if Y>0 || lfit Y X if Y>0|| lfit Ystar X, ///
-legend(
+legend( ///
     label(1 "Y")  ///
     label(2 "Truncated Regression") /// 
     label(3 "True Regression Relationship") )
 
 graph export graphs/censored.png, replace
 
-// try help export graph 
 
-regress Y X if Y>0
+*------------------------------
+*** Monte Carlo Simualtion 
+*------------------------------
 
-tobit Y X, ll(0)  robust
+clear all
+set more off
 
-// try help tobit
+local sims = 1000   // Number of simulations
+local N = 50        // Sample size
 
-*vce represents variance-covariance matrix of the estimators
-tobit Y X, ll(0)  vce(robust)
+scalar beta0 = -40
+scalar beta1 = 1.2
+scalar sigma = 10
+
+set seed 2024
+
+matrix results = J(`sims', 2, .)  // Store beta1 and beta1_tobit
+
+forval s = 1/`sims' {
+    clear
+    qui set obs `N'
+    
+    gen X = _n + 10
+    gen U = rnormal(0, 10)
+    
+    gen Ystar = beta0 + beta1 * X + U
+    
+    gen Y = Ystar * (Ystar > 0)
+    
+    qui regress Y X if Y > 0
+    matrix results[`s', 1] = _b[X]
+    qui tobit Y X, ll(0)
+    matrix results[`s', 2] = _b[X]  // Save beta1 from Tobit
+}
+
+matrix list results
+
+clear
+svmat results
+rename results1 beta1_ols
+rename results2 beta1_tobit
+
+summarize beta1_ols beta1_tobit
+
+
+/*
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+   beta1_ols |      1,000    .8228224    .1694296   .3285948   1.593495
+ beta1_tobit |      1,000    1.221373     .167167   .7519227   1.813542
+
+ 
+The tobit beta is almost unbiased. 
+
+This holds because we assume the model is linear and the error term are normally distributed
+
+i) the distribution of the eroor term
+2) sample size (you can consider 50 100 and 200,, maybe larger for consistecy?)
+3) degree of cencosoing (the pi) 
+*/
 
 *----------------------------------------------------------------------------*
 * Section 2: Sample Selection
@@ -99,7 +150,7 @@ probit B nwifeinc age kidslt6 kidsge6
 
 * stage 1.5:
 gen z=_b[nwifeinc]*nwifeinc+_b[age]*age+_b[kidslt6]*kidslt6 +_b[kidsge6]*kidsge6 + _b[_cons]
-gen lambda_hat=normalden(z)/normal(z)
+gen lambda_hat=normalden(z)/normal(z) // normaldel is \phi() and normal is \Phi()
 
 *stage 2: 
 reg lwage educ exper exper2 lambda_hat
@@ -114,8 +165,11 @@ heckman lwage educ exper exper2, select(nwifeinc age kidslt6 kidsge6)
 * Section 3: exporting tables
 *----------------------------------------------------------------------------*
 
+
 *use estout to generate nice tables
 ssc install estout, replace
+
+use "data\EAWE01.dta", clear 
 
 *To create nice LATEX/Doc tables we can use this command
 *If you do not want/need Latex output, just erase the commands.
@@ -129,7 +183,14 @@ esttab model_l using graphs/model_l.rtf, replace ///
 se onecell width(\hsize) ///
 addnote() ///
 label title(Estimation Result of Linear Model)
-%label title(Regression DD Estimates of MLDA effects on death rates (Replication of Table 5.2 of AP2014) \label{tab::52})
+
+
+// if you want to use the table in latex 
+esttab model_l using graphs/model_l.tex, replace ///
+se onecell width(\hsize) ///
+addnote() ///
+label title(Estimation Result of Linear Model)
+
 
 *----------------------------------------------------------------------------*
 * Bonus: Drawing CDFs and PDFs
