@@ -92,8 +92,13 @@ you could define the list as a a macro called controls. Then instead of:*/
 
 regress mpg trunk weight length
 
-local apple trunk weight length
-regress mpg `apple'
+local regressors trunk weight length
+regress mpg `regressors'
+
+global regressors trunk weight length
+regress mpg $regressors
+
+
 
 local varlist "trunk weight length"
 regress mpg `varlist'
@@ -102,6 +107,7 @@ regress mpg `varlist'
 local a = 2
 
 di `a'
+
 
 *----------------------------------------------------------------------------*
 * Section 2: Loops in Stata

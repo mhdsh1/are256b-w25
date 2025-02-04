@@ -1,0 +1,209 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\mahdi\Dropbox\Courses\are256b-w25\week4.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}31 Jan 2025, 09:07:49
+{txt}
+{com}. *----------------------------------------------------------------------------*
+. 
+. *----------------------------------------------------------------------------*
+. * Section 1: Local Macros
+. *----------------------------------------------------------------------------*
+. 
+. use data\auto
+{txt}(1978 Automobile Data)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000001.tmp"
+{txt}
+{com}. local x 1
+{txt}
+{com}. //is the same as:
+. local x=1
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000002.tmp"
+{txt}
+{com}. display x
+{res}{err}x not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000003.tmp"
+{txt}
+{com}. local x 1
+{txt}
+{com}. //is the same as:
+. local x=1
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000004.tmp"
+{txt}
+{com}. display `x'
+{res}
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000005.tmp"
+{txt}
+{com}. 
+. local x 1
+{txt}
+{com}. //is the same as:
+. local x=1
+{txt}
+{com}. 
+. display `x'
+{res}1
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000006.tmp"
+{txt}
+{com}. local x 1
+{txt}
+{com}. //is the same as:
+. local x=1
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000007.tmp"
+{txt}
+{com}. display x
+{res}{err}x not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000008.tmp"
+{txt}
+{com}. local y 2+2
+{txt}
+{com}. display `y'
+{res}4
+{txt}
+{com}. display "`y'"
+{res}2+2
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_000009.tmp"
+{txt}
+{com}. local x -2
+{txt}
+{com}. di `x'^2
+{res}-4
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_00000a.tmp"
+{txt}
+{com}. local X = "lalala"  
+{txt}
+{com}. 
+. display "My variable name is: `X'"
+{res}My variable name is: lalala
+{txt}
+{com}. display "My variable name is:   X"
+{res}My variable name is:   X
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_00000b.tmp"
+{txt}
+{com}. regress mpg trunk weight length
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        74
+{txt}{hline 13}{c +}{hline 34}   F(3, 70)        = {res}    45.63
+{txt}       Model {c |} {res} 1616.73513         3  538.911711   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 826.724325        70  11.8103475   {txt}R-squared       ={res}    0.6617
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.6472
+{txt}       Total {c |} {res} 2443.45946        73  33.4720474   {txt}Root MSE        =   {res} 3.4366
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         mpg{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 7}trunk {c |}{col 14}{res}{space 2}-.0322944{col 26}{space 2} .1371829{col 37}{space 1}   -0.24{col 46}{space 3}0.815{col 54}{space 4}-.3058971{col 67}{space 3} .2413084
+{txt}{space 6}weight {c |}{col 14}{res}{space 2}-.0038771{col 26}{space 2} .0016003{col 37}{space 1}   -2.42{col 46}{space 3}0.018{col 54}{space 4}-.0070689{col 67}{space 3}-.0006853
+{txt}{space 6}length {c |}{col 14}{res}{space 2} -.074239{col 26}{space 2} .0601925{col 37}{space 1}   -1.23{col 46}{space 3}0.222{col 54}{space 4}-.1942892{col 67}{space 3} .0458112
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}  47.4003{col 26}{space 2} 6.465216{col 37}{space 1}    7.33{col 46}{space 3}0.000{col 54}{space 4} 34.50583{col 67}{space 3} 60.29476
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_00000c.tmp"
+{txt}
+{com}. di x 
+{res}{err}x not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_00000d.tmp"
+{txt}
+{com}. foreach i in red blue green {c -(}
+{txt}  2{com}. di "`i'"
+{txt}  3{com}. {c )-}
+red
+blue
+green
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. help foreach
+
+. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_00000e.tmp"
+{txt}
+{com}. local colors red blue green
+{txt}
+{com}. foreach i in `colors' {c -(}
+{txt}  2{com}. di "`i'"
+{txt}  3{com}. {c )-}
+red
+blue
+green
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. help foreach
+
+. do "C:\Users\mahdi\AppData\Local\Temp\STD3a38_00000f.tmp"
+{txt}
+{com}. clear all
+{res}{txt}
+{com}. 
+. use "$path\data\AEJfigs_MM_RD", clear
+{err}{p 0 4 2}
+file {bf:{err}\data\AEJfigs_MM_RD.dta}
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. exit, clear

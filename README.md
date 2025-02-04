@@ -2,7 +2,9 @@
 ARE 256B Winter 2025 TA Sections
 
 ## Announcements
-- Mahdi OHs: Fridays from 10:00 to 11:00 at SSH 2143.  
++ Mahdi OHs: 
+  + Tuesdays from 12:30 to 13:30 at SSH 2143.  
+  + Fridays  from 10:00 to 11:00 at SSH 2143.  
 
 ## Access to Stata
 - option 1
@@ -28,15 +30,18 @@ ARE 256B Winter 2025 TA Sections
 + Week 1 - Jan 10
 + Week 2 - Jan 17
 + Week 3 -- Jan 24
-  + HW1 due XXX
-+ Week 4 - Jan 31 -- MT REVIEW
-  + MT on Feb 6 (check!)
+  + HW1 due Jan 21, 2025
++ Week 4 - Jan 31 
+  + MT on Feb 6
 + Week 5 - Feb 7
-  + HW2 due XXX
 + Week 6 - Feb 14
 + Week 7 - Feb 21
-  + HW3 due XXX
 + Week 8 - Feb 28
 + Week 9 - Mar 7
-  + HW4 due XXX
-+ Week 10 - Mar 14 ??
++ Week 10 - Mar 14
+
+
+
++ HW2 due XXX
++ HW3 due XXX
++ HW4 due XXX

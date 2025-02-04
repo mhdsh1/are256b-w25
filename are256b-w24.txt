@@ -1,0 +1,9 @@
+ideas:
+
+- adding some instruction on latex? 
+
+- adding r equivalent codes to slides
+
+
+
+
