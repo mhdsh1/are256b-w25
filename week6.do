@@ -1,27 +1,66 @@
 *--------------------------------------------------
 *ARE 256b W25 -- Week 6
 *week6.do
-*XXX/XX/2025
+*Feb/21/2025
 *Mahdi Shams (mashams@ucdavis.edu)
 *Based on Bulat's Slides, and previous work by Armando Rangel Colina & Zhiran Qin
 *This code is prepared for the week 6 of ARE 256B TA Sections. 
 *--------------------------------------------------
 
-*--------------------------------------------------
-*Program Setup
-*--------------------------------------------------
-version 14              // Set Version number for backward compatibility
 set more off            // Disable partitioned output
 clear all               // Start with a clean slate
 set linesize 80         // Line size limit to make output more readable
 macro drop _all         // clear all macros
 capture log close       // Close existing log files
 log using week6, replace // Open log file
-*--------------------------------------------------
 
-*set working directory 
-global path "C:\Users\mahdi\Dropbox\Courses\are256b-w25"
+local user = "mahdi"
+
+if "`c(os)'" == "Windows" {
+    global path "C:/Users/`user'/Dropbox"
+	} 
+else {
+	if "`c(os)'" == "Unix"{
+		global path "/home/`user'/Dropbox"
+	} 
+}
+global path "$path/Courses/are256b-w25"
 cd $path
+
+
+*----------------------------------------------------------------------------*
+* Related to HA2 from week4: Replication of Table 5.2 of Mastering Metrics
+*----------------------------------------------------------------------------*
+
+use "$path/data/deaths",clear
+
+* replicating model 5.5 (col 1 & 3)and 5.6 (col 2 & 4) in AP2014
+
+* generating state trends
+levelsof state , loc(states)
+foreach s of loc states {
+gen t_`s' = year*(state == `s')
+}
+
+set more off
+//tells Stata to run the commands continuously without worrying about 
+// the capacity of the Results window to display the results
+
+* Col 1
+reg mrate legal i.year i.state ///
+if dtype == 1 & inrange(year,1970,1983) & agegr ==2, vce(cluster state)
+
+* Col 2
+//exercise 
+
+* Col 3
+reg mrate legal i.year i.state [w = pop] ///
+if dtype == 1 & inrange(year,1970,1983) & agegr ==2, vce(cluster state)
+
+* Col 4 for dtype == 1 (i.e., all death)
+// exercise
+
+
 
 *--------------------------------------------------
 * Section 1: White noise, MA(1), AR(1)  
@@ -60,8 +99,6 @@ ac e
 // ... as function of lags (\tau in lecture)
 // We observe that the ac for the white noise is always 0 for all the lags
 
-
-
 * Let's create the MA1 process
 // we are going to make the same process as we have on slide 10
 
@@ -75,9 +112,12 @@ tsline yma if t<100 // plot the MA(1)
 
 ac yma // plot the autocorrelation
 
-
-
 * Let's create the AR1 process
+
+/*
+refresher:
+\gamma(p) = \rho^p \frac{\sigma^2_e}{1-\rho^2} 
+*/
 
 gen yar=0.25+e in 1 // we create the y_1 first, assuming y_0 is 0: 
 
@@ -108,7 +148,7 @@ replace yar_06=0.25+0.25*yar_06[_n-1]+e in 2/1050
 gen yar_09=e in 1
 replace yar_09=0.25+0.9*yar_09[_n-1]+e in 2/1050
 
-tsline yar_00 yar_025 yar_04 yar_09
+tsline yar_00 yar_04 yar_06 yar_09
 
 * compate the autocorrelograms:
 ac yar_00 
@@ -162,16 +202,17 @@ ac dSP500, lag(100)
 *Note that Index is trending upwards, but after doing percentage changes ... 
 * ... it wiggles around the mean.
 
-import delimited "data\CPIAUCSL.csv",clear
+import delimited "data/CPIAUCSL.csv",clear
 
 *time format
-generate date1 = date(DATE, "YMD")
-gen date2 = date1
-format date2 %td
-tsset date2
+g date1 = date(date, "YMD")
+format date1 %td
 
-rename cpilfesl y
+tsset date1
+
+rename cpiaucsl y
 ac y, lags(200)
+
 
 *two ways to calculate percentage change
 gen logy = log(y)
@@ -188,7 +229,7 @@ ac logy, lags(200)
 sum dlogy
 ac dlogy, lag(70)
 
-*Compute differences in CPI percentage changes, dd log Y, make TS plot. How many AC lags are statistically for dd log Y ?
+*Compute differences in CPI percentage changes, dd log Y, make TS plot. How many AC lags are statistically significant for dd log Y ?
 
 gen ddlogy = dlogy - dlogy[_n-1]
 tsline ddlogy

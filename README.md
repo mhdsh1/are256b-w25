@@ -41,7 +41,6 @@ ARE 256B Winter 2025 TA Sections
 + Week 10 - Mar 14
 
 
-
 + HW2 due XXX
 + HW3 due XXX
 + HW4 due XXX
