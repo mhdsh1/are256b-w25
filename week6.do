@@ -50,8 +50,14 @@ set more off
 reg mrate legal i.year i.state ///
 if dtype == 1 & inrange(year,1970,1983) & agegr ==2, vce(cluster state)
 
+browse
+
 * Col 2
-//exercise 
+
+* t_* stands for t_1 t_2 up to t_52 
+reg mrate legal i.year i.state  t_* ///
+if dtype == 1 & inrange(year,1970,1983) & agegr ==2, vce(cluster state)
+
 
 * Col 3
 reg mrate legal i.year i.state [w = pop] ///
@@ -60,6 +66,8 @@ if dtype == 1 & inrange(year,1970,1983) & agegr ==2, vce(cluster state)
 * Col 4 for dtype == 1 (i.e., all death)
 // exercise
 
+
+codebook dtype
 
 
 *--------------------------------------------------
